@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABA Standard 304 — Simulation Course Compliance Review</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f5f3;color:#1a1a1a;min-height:100vh;padding:2rem 1rem}
+.wrap{max-width:700px;margin:0 auto}
+h1{font-size:22px;font-weight:500;color:#1a1a1a;margin-bottom:4px}
+.subtitle{font-size:14px;color:#777;margin-bottom:1.5rem}
+.sources-note{font-size:11px;color:#999;line-height:1.6;padding:10px 14px;border:0.5px solid #ddd;border-radius:8px;margin-bottom:1.5rem;background:#fff}
+.sources-note a{color:#2563eb}
+.src-tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:500}
+.src-doc{background:#dbeafe;color:#1e40af}
+.src-synth{background:#f3f4f6;color:#6b7280}
+.progress-row{display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:6px}
+.progress-track{height:3px;background:#e5e5e5;border-radius:2px;overflow:hidden;margin-bottom:1.25rem}
+.progress-fill{height:100%;background:#2563eb;border-radius:2px;transition:width .35s ease}
+.hist{display:flex;flex-wrap:wrap;gap:5px;min-height:22px;margin-bottom:1rem}
+.chip{font-size:11px;font-weight:500;padding:2px 8px;border-radius:4px}
+.chip-pass{background:#dcfce7;color:#166534}
+.chip-fail{background:#fee2e2;color:#991b1b}
+.card{background:#fff;border:0.5px solid #e5e5e5;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem}
+.card.dim{opacity:.4;pointer-events:none}
+.gate-badge{font-size:11px;font-weight:500;color:#1e40af;background:#dbeafe;padding:3px 10px;border-radius:4px;display:inline-block;margin-bottom:10px}
+.part-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.part-label{font-size:22px;font-weight:500;color:#1a1a1a;line-height:1;min-width:20px}
+.part-of{font-size:12px;color:#aaa}
+.q{font-size:15px;font-weight:500;color:#1a1a1a;line-height:1.55;margin-bottom:8px}
+.note{font-size:12px;color:#888;font-style:italic;line-height:1.55;margin-bottom:10px;padding-left:12px;border-left:2px solid #e5e5e5}
+.guide{font-size:13px;color:#666;line-height:1.65;margin-bottom:10px;padding-left:12px;border-left:2px solid #e5e5e5}
+.src-row{font-size:11px;color:#aaa;margin-bottom:14px;display:flex;align-items:baseline;gap:4px;flex-wrap:wrap}
+.src-row a{color:#2563eb}
+.btns{display:flex;gap:10px}
+.btn{flex:1;padding:10px 16px;border-radius:8px;border:0.5px solid #d1d5db;background:transparent;font-size:14px;font-weight:500;cursor:pointer;color:#1a1a1a;transition:all .15s}
+.btn-y:hover{background:#dcfce7;color:#166534;border-color:#86efac}
+.btn-n:hover{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
+.flag{background:#fee2e2;border:0.5px solid #fca5a5;border-radius:8px;padding:10px 14px;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.flag-t{font-size:13px;color:#991b1b}
+.flag-btn{font-size:13px;padding:6px 14px;border-radius:8px;border:0.5px solid #fca5a5;background:transparent;color:#991b1b;cursor:pointer;white-space:nowrap}
+.flag-btn:hover{background:#fee2e2}
+.or-note{font-size:12px;color:#666;font-style:italic;margin-bottom:12px;padding:7px 10px;background:#f9fafb;border-radius:8px}
+.pass{background:#dcfce7;border:0.5px solid #86efac;border-radius:12px;padding:1.5rem;text-align:center;margin-bottom:1rem}
+.pass-ico{width:36px;height:36px;border-radius:50%;background:#166534;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.pass-t{font-size:18px;font-weight:500;color:#166534;margin-bottom:8px}
+.pass-b{font-size:13px;color:#166534;line-height:1.65}
+.warn-banner{background:#fee2e2;border:0.5px solid #fca5a5;border-radius:12px;padding:1rem 1.5rem;margin-bottom:1.25rem;font-size:14px;font-weight:500;color:#991b1b}
+.rep-item{background:#fff;border:0.5px solid #fca5a5;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem}
+.rep-gate{font-size:11px;font-weight:500;color:#991b1b;background:#fee2e2;padding:3px 10px;border-radius:4px;display:inline-block;margin-bottom:10px}
+.rep-title{font-size:15px;font-weight:500;color:#1a1a1a;margin-bottom:10px}
+.rep-qlbl{font-size:10px;font-weight:500;color:#888;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.rep-q{font-size:13px;color:#666;line-height:1.6;padding:6px 10px;border-left:2px solid #fca5a5;margin-bottom:6px}
+.rep-lbl{font-size:10px;font-weight:500;color:#888;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;margin-top:14px}
+.rep-fix{font-size:13px;color:#1a1a1a;line-height:1.7;background:#f9fafb;padding:10px 12px;border-radius:8px}
+.rep-cite{font-size:11px;color:#aaa;margin-top:10px}
+.rep-cite a{color:#2563eb}
+.restart{font-size:13px;color:#888;cursor:pointer;text-decoration:underline;background:none;border:none;padding:0;display:block;margin-top:.75rem}
+.submit-box{background:#fff;border:0.5px solid #e5e5e5;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem}
+.submit-box p{font-size:14px;color:#444;margin-bottom:12px;line-height:1.6}
+.submit-box label{font-size:13px;color:#666;display:block;margin-bottom:5px}
+.submit-box input{width:100%;padding:8px 12px;border:0.5px solid #d1d5db;border-radius:8px;font-size:14px;margin-bottom:12px;font-family:inherit}
+.submit-box input:focus{outline:2px solid #2563eb;border-color:transparent}
+.submit-btn{width:100%;padding:10px 16px;border-radius:8px;border:none;background:#2563eb;color:#fff;font-size:14px;font-weight:500;cursor:pointer;transition:background .15s}
+.submit-btn:hover{background:#1d4ed8}
+.submit-btn:disabled{background:#93c5fd;cursor:not-allowed}
+.submit-status{font-size:13px;margin-top:10px;text-align:center;min-height:20px}
+.submit-ok{color:#166534}
+.submit-err{color:#991b1b}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p style="font-size:11px;font-weight:500;color:#888;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px">Annual compliance review</p>
+  <h1>ABA Standard 304 — Simulation course</h1>
+  <p class="subtitle">Complete all questions, then submit your report.</p>
+  <div class="sources-note">
+    <span class="src-tag src-doc">ABA standard/guidance</span> = text drawn directly from Standard 304 and the 2023–24 ABA Guidance Memo. &nbsp;
+    <span class="src-tag src-synth">Synthesized</span> = guidance derived from the standard's plain language. &nbsp;
+    ABA guidance memos: <a href="https://www.americanbar.org/groups/legal_education/accreditation/consultants_memos/" target="_blank">americanbar.org/guidance-memos</a> &nbsp;·&nbsp;
+    Full standards: <a href="https://www.americanbar.org/groups/legal_education/resources/standards/" target="_blank">americanbar.org/standards</a>
+  </div>
+  <div class="progress-row"><span id="stepLbl">Gate 1 of 8</span><span id="pctLbl">0%</span></div>
+  <div class="progress-track"><div class="progress-fill" id="pFill" style="width:0%"></div></div>
+  <div class="hist" id="hist"></div>
+  <div id="main"></div>
+</div>
+
+<script>
+var SHEET_URL='https://script.google.com/macros/s/AKfycbyBTlu8d9MESJ8Efmi3WFVGEf3vc4WtaNVDFaJ2lj8wp_jPvy0pwt5ecX9zuew1vGjU/exec';
+
+var abaStd='https://www.americanbar.org/groups/legal_education/resources/standards/';
+var abaMemo='https://www.americanbar.org/groups/legal_education/accreditation/consultants_memos/';
+
+var gates=[
+  {id:1,badge:'Gate 1 \u2014 Primary character of the course',cite:'Standard 304(a); 2023\u201324 ABA Guidance Memo',srcTag:'doc',srcLink:abaMemo,srcLinkLbl:'ABA guidance memos',srcNote:'Standard text and all quoted guidance language are from Standard 304 and the 2023\u201324 ABA Guidance Memo.',fix:'Restructure the course so that simulation exercises are its primary focus and organizing principle \u2014 not an add-on to a doctrinal course. Any doctrinal content should serve the simulation, not vice versa. The course must be easily identifiable as a simulation course to an outside reviewer based on the syllabus and course description.',subs:[
+    {lbl:'a',q:'Are the simulation exercises the primary focus and organizing principle of the course \u2014 rather than a component inserted into an otherwise doctrinal course?',guide:'The Guidance Memo states the experiential nature should be \u201cthe organizing principle of the course,\u201d with doctrinal material \u201cincidental to it, not the other way around.\u201d (ABA standard/guidance \u2014 2023\u201324 Guidance Memo)'},
+    {lbl:'b',q:'Would the central nature of the simulation exercises be easily and clearly identifiable to an outside reviewer, based on the syllabus and course description?',guide:'The Guidance Memo states the Council \u201cwill expect the character of courses that the school holds out as meeting the requirement to be clearly experiential.\u201d (ABA standard/guidance \u2014 2023\u201324 Guidance Memo)'}
+  ]},
+  {id:2,badge:'Gate 2 \u2014 Simulation course definition',cite:'Standard 304(b)',srcTag:'doc',srcLink:abaStd,srcLinkLbl:'ABA standards',srcNote:'All three substantive elements come directly from Standard 304(b).',fix:'Ensure all three definitional elements are present and evident in the syllabus. If the course involves actual clients, it may qualify as a law clinic under Standard 304(c)\u2013(d) rather than a simulation.',subs:[
+    {lbl:'a',q:'Does the course involve no actual clients \u2014 only simulated clients, simulated parties, or hypothetical scenarios?',guide:'Standard 304(b) requires the experience to be \u201cnot involving an actual client.\u201d (ABA standard/guidance \u2014 Standard 304(b))'},
+    {lbl:'b',q:'Is the student experience reasonably similar to a lawyer advising or representing a client, or engaging in other lawyering tasks?',guide:'\u201cLawyering tasks\u201d is broad \u2014 drafting, negotiation, counseling, legal research and writing, motion practice, and similar practice tasks qualify. (ABA standard/guidance \u2014 Standard 304(b))'},
+    {lbl:'c',q:'Are the facts and circumstances used in the simulation devised or adopted by a faculty member?',guide:'Standard 304(b) requires the scenario to be \u201cdevised or adopted by a faculty member.\u201d Scenarios from outside vendors are acceptable only if a faculty member has explicitly adopted them. (ABA standard/guidance \u2014 Standard 304(b))'},
+    {lbl:'d',q:'Would each of these components be evident to an outside reviewer from the syllabus?',guide:'The ABA may review course syllabi to assess compliance. Each definitional element should be discernible from the syllabus and course description. (Synthesized from Standard 304(b))'}
+  ]},
+  {id:3,badge:'Gate 3 \u2014 Classroom instructional component',cite:'Standard 304(a)(5)',srcTag:'doc',srcLink:abaStd,srcLinkLbl:'ABA standards',srcNote:'The classroom instructional requirement is drawn directly from Standard 304(a)(5).',fix:'Add a formal classroom instructional component \u2014 synchronous sessions (in-person or real-time virtual) that frame, support, and debrief the simulation work. Ensure class meetings are clearly indicated in the syllabus.',subs:[
+    {lbl:'a',q:'Does the course include in-person or synchronous classroom instruction \u2014 not solely asynchronous materials, pre-recorded content, or independent readings?',guide:'Standard 304(a)(5) requires a \u201cclassroom instructional component\u201d for simulation courses. Unlike field placements, simulation courses have no flexibility to substitute tutorials or asynchronous reflection. (ABA standard/guidance \u2014 Standard 304(a)(5))'},
+    {lbl:'b',q:'Is the classroom instruction meaningfully connected to and integrated with the simulation exercises?',guide:'A classroom component entirely disconnected from the simulation exercises may not constitute the required classroom instructional component. (Synthesized from Standard 304(a)(5))'},
+    {lbl:'c',q:'Are the class meetings indicated in the syllabus?',guide:'Class meeting schedules and formats should be clearly documented in the syllabus so the classroom instructional component is evident to a reviewer. (Synthesized from Standard 304(a)(5))'}
+  ]},
+  {id:4,badge:'Gate 4 \u2014 Integration of doctrine, theory, skills, and ethics',cite:'Standard 304(a)(1)',srcTag:'doc',srcLink:abaStd,srcLinkLbl:'ABA standards',srcNote:'The four required elements come directly from Standard 304(a)(1).',fix:'Identify which element(s) are missing or insufficiently integrated. Legal ethics is the most commonly overlooked \u2014 it must appear within simulation exercises, not just as a standalone module. Revise your syllabus to show how all four elements are integrated throughout.',subs:[
+    {lbl:'a',q:'Does the course integrate doctrine \u2014 is relevant substantive law taught as part of, or in direct support of, the simulation exercises?',guide:'Standard 304(a)(1) requires integration of doctrine. Students should understand and apply the applicable substantive law within the simulation context. (ABA standard/guidance \u2014 Standard 304(a)(1))'},
+    {lbl:'b',q:'Does the course integrate theory \u2014 does it address the conceptual principles and analytical frameworks that underlie the lawyering tasks students perform?',guide:'Theory goes beyond procedural instruction \u2014 students should understand the analytical and jurisprudential principles behind what they are doing. (ABA standard/guidance \u2014 Standard 304(a)(1))'},
+    {lbl:'c',q:'Does the course integrate skills \u2014 must students practice professional lawyering skills in the simulation exercises?',guide:'Skills must be integrated into the simulation exercises themselves, not incidental to doctrinal instruction. (ABA standard/guidance \u2014 Standard 304(a)(1))'},
+    {lbl:'d',q:'Does the course integrate legal ethics \u2014 are professional responsibility issues embedded within simulation exercises, not addressed only in a separate, standalone module?',guide:'Standard 304(a)(1) requires integration of all four elements together. A standalone ethics module running parallel to the simulation likely does not satisfy the integration requirement. (ABA standard/guidance \u2014 Standard 304(a)(1))'},
+    {lbl:'e',q:'Are each of these components noted in the syllabus?',guide:'Each of the four integrated elements \u2014 doctrine, theory, skills, and ethics \u2014 should be identifiable in the syllabus so a reviewer can assess integration. (Synthesized from Standard 304(a)(1))'}
+  ]},
+  {id:5,badge:'Gate 5 \u2014 Student performance of professional lawyering skills',cite:'Standard 304(a)(1), (3), (6)',srcTag:'synth',srcLink:abaStd,srcLinkLbl:'ABA standards',srcNote:'The performance requirement is from Standard 304(a)(1); multiple opportunities from 304(a)(3); direct supervision from 304(a)(6). Guidance on adequacy is synthesized from the standards\u2019 plain language.',fix:'Ensure students are actively performing lawyering tasks. Add multiple distinct performance opportunities distributed across the term. Revise faculty engagement so that supervision involves observing or closely monitoring actual student performance, not only grading submitted work. Document all of this in the syllabus.',subs:[
+    {lbl:'a',q:'Do students actively perform professional lawyering skills in the simulation rather than merely observing, reading about, or discussing those skills?',guide:'Standard 304(a)(1) uses the word \u201cperformance\u201d \u2014 students must do lawyering, not just study it. (ABA standard/guidance \u2014 Standard 304(a)(1); guidance synthesized)'},
+    {lbl:'b',q:'Does the course include more than one distinct opportunity for students to perform professional lawyering skills?',guide:'Standard 304(a)(3) requires \u201cmultiple opportunities for performance.\u201d A single simulation, however complex, is generally insufficient. (ABA standard/guidance \u2014 Standard 304(a)(3))'},
+    {lbl:'c',q:'Are the performance opportunities distributed across the term rather than concentrated at a single point?',guide:'Plain-language inference: \u201cmultiple opportunities\u201d implies students can receive feedback on earlier performances and apply it to later ones \u2014 the standard does not explicitly require temporal distribution. (Synthesized from Standard 304(a)(3))',note:'Plain-language inference: the standard does not explicitly require temporal distribution.'},
+    {lbl:'d',q:'Does the faculty member observe or closely monitor students\u2019 actual performance in the simulation rather than only reviewing a finished work product submitted after the fact?',guide:'Standard 304(a)(6) requires \u201cdirect supervision of the student\u2019s performance.\u201d Grading a submitted document without supervising the process is unlikely to satisfy this requirement. (ABA standard/guidance \u2014 Standard 304(a)(6); guidance synthesized)',note:'Note: describing the supervision mechanism explicitly in the syllabus is advisable, though not stated as a requirement in Standard 304(a)(6).'},
+    {lbl:'e',q:'Are the performance opportunities and these characteristics listed in the syllabus?',guide:'Performance opportunities, their distribution, and the supervision structure should be documented in the syllabus. (Synthesized from Standards 304(a)(1), (3), (6))'}
+  ]},
+  {id:6,badge:'Gate 6 \u2014 Development of underlying concepts',cite:'Standard 304(a)(2)',srcTag:'synth',srcLink:abaStd,srcLinkLbl:'ABA standards',srcNote:'The requirement to develop the concepts underlying the professional skills being taught is from Standard 304(a)(2). Guidance on implementation is synthesized from the standard\u2019s plain language.',fix:'Supplement skills instruction with explicit attention to the underlying principles that govern each skill. Add structured debriefs, reading assignments, or class discussions that connect student performance to the relevant concepts. Ensure these are evident in the syllabus.',subs:[
+    {lbl:'a',q:'Does the course address why and when each professional lawyering skill is performed \u2014 not just the procedural steps for executing it?',guide:'Standard 304(a)(2) requires development of \u201cthe concepts underlying the professional skills.\u201d Students must understand the analytical, strategic, and professional principles behind the tasks. (ABA standard/guidance \u2014 Standard 304(a)(2); guidance synthesized)'},
+    {lbl:'b',q:'Are the underlying principles explicitly addressed in course materials, class sessions, or structured debriefs \u2014 not left for students to infer on their own?',guide:'Conceptual development must be deliberate and documented \u2014 it should appear in the syllabus, assigned readings, lecture materials, or post-exercise debriefs. (Synthesized from Standard 304(a)(2))'},
+    {lbl:'c',q:'Is the inclusion of these underlying principles evident in the syllabus?',guide:'The syllabus should reflect how and where conceptual development occurs so a reviewer can assess compliance with Standard 304(a)(2). (Synthesized from Standard 304(a)(2))'}
+  ]},
+  {id:7,badge:'Gate 7 \u2014 Self-evaluation and faculty feedback',cite:'Standard 304(a)(4)',srcTag:'synth',srcLink:abaStd,srcLinkLbl:'ABA standards',srcNote:'All elements are from Standard 304(a)(4). Guidance on adequacy is synthesized from the standard\u2019s plain language.',fix:'Add structured self-evaluation components after each major exercise \u2014 written reflections, self-assessment rubrics, or facilitated debriefs. Ensure faculty feedback goes beyond grades to identify specific observations about student performance. Document both mechanisms in the syllabus.',subs:[
+    {lbl:'a',q:'Does the course include structured opportunities for student self-evaluation \u2014 such as written reflections, self-assessment forms, or facilitated debriefs after simulation exercises?',guide:'Standard 304(a)(4) explicitly requires self-evaluation as a separate element from faculty feedback. This must be a formal, deliberate component. (ABA standard/guidance \u2014 Standard 304(a)(4); guidance synthesized)'},
+    {lbl:'b',q:'Does the faculty member provide feedback on student performance that goes beyond a grade \u2014 identifying specific strengths and areas for improvement?',guide:'Standard 304(a)(4) requires \u201cfeedback from a faculty member\u201d as a distinct element. A numerical or letter grade alone likely does not satisfy this requirement. (ABA standard/guidance \u2014 Standard 304(a)(4); guidance synthesized)',note:'Plain-language inference: the standard does not explicitly state that a grade alone is insufficient, but requires feedback as a distinct element from grading.'},
+    {lbl:'c',q:'Are each of these components indicated in the syllabus?',guide:'Self-evaluation mechanisms and faculty feedback structures should be documented in the syllabus so they are reviewable by the ABA. (Synthesized from Standard 304(a)(4))'}
+  ]},
+  {id:8,badge:'Gate 8 \u2014 Prerequisites and contemporaneous training',cite:'Standard 304(f)',srcTag:'doc',srcLink:abaStd,srcLinkLbl:'ABA standards',srcNote:'The prerequisites/contemporaneous training requirement is from Standard 304(f). This is an OR requirement.',orLogic:true,fix:'Either establish clearer enrollment prerequisites and enforce them, or build more robust contemporaneous training into the beginning of the course. Document whichever approach you use explicitly in the syllabus.',subs:[
+    {lbl:'a',q:'Have enrolled students completed sufficient prerequisites to engage meaningfully with this simulation?',guide:'Standard 304(f). Prerequisites are one of two ways to satisfy this requirement. (ABA standard/guidance \u2014 Standard 304(f))',note:'If Yes, Gate 8 is satisfied \u2014 question b need not be answered.'},
+    {lbl:'b',q:'Does the course provide sufficient contemporaneous training at the outset to prepare students who may lack prerequisites \u2014 enough to assure the quality of the educational experience?',guide:'Standard 304(f). If prerequisites are insufficient or absent, the course must provide foundational instruction sufficient to \u201cassure the quality of the student educational experience.\u201d (ABA standard/guidance \u2014 Standard 304(f))'},
+    {lbl:'c',q:'Are these prerequisites or training opportunities mentioned in the syllabus?',guide:'Whichever approach is used \u2014 prerequisites or contemporaneous training \u2014 should be documented in the syllabus so a reviewer can assess compliance with Standard 304(f). (Synthesized from Standard 304(f))'}
+  ]}
+];
+
+var gateIdx=0,subIdx=0,flagged={},gateHist=[];
+
+function upd(){
+  var pct=Math.round((gateIdx/gates.length)*100);
+  document.getElementById('pFill').style.width=pct+'%';
+  document.getElementById('stepLbl').textContent=gateIdx<gates.length?'Gate '+(gateIdx+1)+' of '+gates.length:'Complete';
+  document.getElementById('pctLbl').textContent=pct+'%';
+  document.getElementById('hist').innerHTML=gateHist.map(function(h,i){
+    return '<span class="chip '+(h==='pass'?'chip-pass':'chip-fail')+'">G'+(i+1)+': '+(h==='pass'?'Pass':'Fail')+'</span>';
+  }).join('');
+}
+
+function render(){
+  upd();
+  var m=document.getElementById('main');
+  if(gateIdx>=gates.length){renderFinal();return;}
+  var g=gates[gateIdx],s=g.subs[subIdx];
+  var orNote=(g.orLogic&&subIdx===1)?'<p class="or-note">Question b applies because prerequisites (question a) were marked insufficient. Standard 304(f) is an OR requirement \u2014 either sufficient prerequisites OR sufficient contemporaneous training satisfies it.</p>':'';
+  var noteHtml=s.note?'<p class="note">'+s.note+'</p>':'';
+  var srcTag='<span class="src-tag '+(g.srcTag==='doc'?'src-doc':'src-synth')+'">'+(g.srcTag==='doc'?'ABA standard/guidance':'Synthesized')+'</span>';
+  var srcLine='<div class="src-row">'+srcTag+'<span>'+g.srcNote+' <a href="'+g.srcLink+'" target="_blank">'+g.srcLinkLbl+'</a></span></div>';
+  m.innerHTML='<div class="card" id="curCard"><span class="gate-badge">'+g.badge+'</span><div class="part-row"><span class="part-label">'+s.lbl+'.</span>'+(g.subs.length>1?'<span class="part-of">Part '+s.lbl+' of '+g.subs.length+'</span>':'')+'</div><p class="q">'+s.q+'</p>'+noteHtml+orNote+'<p class="guide">'+s.guide+'</p>'+srcLine+'<div class="btns"><button class="btn btn-y" onclick="ans(true)">Yes &#8594;</button><button class="btn btn-n" onclick="ans(false)">No</button></div></div><div id="fz"></div>';
+}
+
+function ans(yes){
+  var g=gates[gateIdx];
+  if(!yes){
+    if(!flagged[gateIdx]) flagged[gateIdx]=[];
+    flagged[gateIdx].push(subIdx);
+    var card=document.getElementById('curCard');
+    if(card) card.classList.add('dim');
+    var isLast=(subIdx>=g.subs.length-1);
+    var nextLbl=isLast?(gateIdx<gates.length-1?'Continue to gate '+(gateIdx+2)+' \u2192':'See report \u2192'):'Next question \u2192';
+    document.getElementById('fz').innerHTML='<div class="flag"><span class="flag-t">&#9888; Flagged for review</span><button class="flag-btn" onclick="advanceSub()">'+nextLbl+'</button></div>';
+    return;
+  }
+  if(g.orLogic&&subIdx===0){advance(true);return;}
+  subIdx++;
+  if(subIdx>=g.subs.length){advance(!flagged[gateIdx]);}
+  else{render();}
+}
+
+function advanceSub(){
+  var g=gates[gateIdx];
+  subIdx++;
+  if(subIdx>=g.subs.length){advance(!flagged[gateIdx]);}
+  else{render();}
+}
+
+function advance(passed){
+  gateHist.push(passed?'pass':'fail');
+  gateIdx++;subIdx=0;render();
+}
+
+function buildReportText(){
+  var defGates=Object.keys(flagged).map(Number);
+  if(!defGates.length) return 'All gates passed \u2014 no deficiencies identified.';
+  var lines=[];
+  defGates.forEach(function(gi){
+    var g=gates[gi];
+    lines.push('GATE '+g.id+': '+g.badge.replace(/^Gate \d+ \u2014 /,''));
+    flagged[gi].forEach(function(si){
+      lines.push('  [No] '+g.subs[si].lbl+'. '+g.subs[si].q);
+    });
+    lines.push('  Remediation: '+g.fix);
+    lines.push('');
+  });
+  return lines.join('\n');
+}
+
+function renderFinal(){
+  upd();
+  var m=document.getElementById('main');
+  var defGates=Object.keys(flagged).map(Number);
+  var totalFlagged=defGates.reduce(function(n,gi){return n+(flagged[gi]?flagged[gi].length:0);},0);
+
+  var reportHtml='';
+  if(!defGates.length){
+    reportHtml='<div class="pass"><div class="pass-ico"><svg viewBox="0 0 18 18" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 9 7 13 15 5"/></svg></div><p class="pass-t">Course meets all ABA Standard 304 requirements</p><p class="pass-b">This simulation course appears to satisfy all elements of ABA Standards 303(a)(3) and 304. Retain your documentation in the event of a compliance review by the Council.</p></div>';
+  } else {
+    var items=defGates.map(function(gi){
+      var g=gates[gi];
+      var srcTag='<span class="src-tag '+(g.srcTag==='doc'?'src-doc':'src-synth')+'">'+(g.srcTag==='doc'?'ABA standard/guidance':'Synthesized')+'</span>';
+      var qs=flagged[gi].map(function(si){return '<div class="rep-q">'+g.subs[si].lbl+'. '+g.subs[si].q+'</div>';}).join('');
+      return '<div class="rep-item"><span class="rep-gate">Gate '+g.id+' \u2014 items flagged</span><p class="rep-title">'+g.badge.replace(/^Gate \d+ \u2014 /,'')+'</p><p class="rep-qlbl">Questions answered No</p>'+qs+'<p class="rep-lbl">Remediation needed</p><p class="rep-fix">'+g.fix+'</p><p class="rep-cite">'+srcTag+' \u00a7 '+g.cite+' \u2014 '+g.srcNote+' <a href="'+g.srcLink+'" target="_blank">'+g.srcLinkLbl+'</a></p></div>';
+    }).join('');
+    reportHtml='<div class="warn-banner">&#9888; '+totalFlagged+' item'+(totalFlagged===1?'':'s')+' flagged across '+defGates.length+' gate'+(defGates.length===1?'':'s')+' \u2014 updates needed before this course fully satisfies ABA Standard 304</div>'+items;
+  }
+
+  var submitHtml='<div class="submit-box"><p>Submit your report to share your results. Your name is optional \u2014 you may submit anonymously.</p><label for="respName">Your name (optional)</label><input type="text" id="respName" placeholder="e.g. Jane Smith"><button class="submit-btn" id="submitBtn" onclick="submitReport()">Submit report</button><p class="submit-status" id="submitStatus"></p></div>';
+
+  m.innerHTML=reportHtml+submitHtml+'<button class="restart" onclick="restart()">&#8635; Start over</button>';
+}
+
+function submitReport(){
+  var btn=document.getElementById('submitBtn');
+  var status=document.getElementById('submitStatus');
+  var name=document.getElementById('respName').value.trim();
+  var defGates=Object.keys(flagged).map(Number);
+  var totalFlagged=defGates.reduce(function(n,gi){return n+(flagged[gi]?flagged[gi].length:0);},0);
+  var gatesFlagged=defGates.length?defGates.map(function(gi){return 'Gate '+(gi+1);}).join(', '):'None';
+
+  btn.disabled=true;
+  btn.textContent='Submitting\u2026';
+  status.textContent='';
+
+  var payload={
+    timestamp: new Date().toLocaleString(),
+    respondent: name||'Anonymous',
+    gatesFlagged: gatesFlagged,
+    totalFlagged: totalFlagged,
+    reportDetail: buildReportText()
+  };
+
+  fetch(SHEET_URL,{
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  }).then(function(){
+    btn.textContent='Report submitted';
+    status.className='submit-status submit-ok';
+    status.textContent='Your report has been submitted successfully.';
+  }).catch(function(){
+    btn.disabled=false;
+    btn.textContent='Submit report';
+    status.className='submit-status submit-err';
+    status.textContent='Submission failed \u2014 please try again or copy your results manually.';
+  });
+}
+
+function restart(){gateIdx=0;subIdx=0;flagged={};gateHist=[];render();}
+render();
+</script>
+</body>
+</html>
